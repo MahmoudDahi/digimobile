@@ -74,7 +74,7 @@ class SummaryInvoiceItem extends StatelessWidget {
         ),
         DataCell(
           Container(
-            width: (widthScreen / 10) * 2,
+            width: (widthScreen / 10) * 2.5,
             alignment: AlignmentDirectional.centerStart,
             child: FittedBox(
               fit: BoxFit.scaleDown,

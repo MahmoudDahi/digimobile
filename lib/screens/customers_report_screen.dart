@@ -51,10 +51,11 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).customers_report),
       ),
-      body: Column(
+      body: ListView(
         children: [
           if (_error != null) Constant().errorWidget(context, _error),
           RangeDate(_confirmRange, _isloading),
@@ -62,17 +63,17 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
             height: 10,
           ),
           if (custReport != null && custReport.isNotEmpty)
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                itemBuilder: (context, index) => CustomerReportItem(
-                  name: custReport[index].name,
-                  count: custReport[index].doucmentNo,
-                  tax: custReport[index].taxSum,
-                  total: custReport[index].totalAmount,
-                ),
-                itemCount: custReport.length,
+            ListView.builder(
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              itemBuilder: (context, index) => CustomerReportItem(
+                name: custReport[index].name,
+                count: custReport[index].doucmentNo,
+                tax: custReport[index].taxSum,
+                total: custReport[index].totalAmount,
               ),
+              itemCount: custReport.length,
             ),
           if (custReport != null && custReport.isEmpty)
             Container(
