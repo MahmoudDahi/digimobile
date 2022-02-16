@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:digimobile/providers/user.dart';
 import 'package:digimobile/widgets/digi_button.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +15,16 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _isLoading = false;
+
   final _formKey = GlobalKey<FormState>();
+
   String _currentPassword;
   String _newPassword;
 
   bool _hideCurrentPassword = true;
   bool _hideNewPassword = true;
   bool _hideConfirmPassword = true;
+
   final _newPasswordNode = FocusNode();
   final _confirmPasswordNode = FocusNode();
 
@@ -27,7 +32,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   void dispose() {
     _newPasswordNode.dispose();
     _confirmPasswordNode.dispose();
-
     super.dispose();
   }
 
@@ -94,9 +98,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         final _errorFailed = await Provider.of<User>(context, listen: false)
             .changePassword(_currentPassword, _newPassword);
         _showDialogWithMessage(_errorFailed);
-      } catch (error) {
-        _showDialogWithMessage(error.toString());
-      } finally {
+      } on SocketException catch (_) {
+        _showDialogWithMessage(
+            AppLocalizations.of(context).no_internet_connection);
+      }catch (error) {
+        _showDialogWithMessage(
+            error.toString());
+      }  finally {
         setState(() {
           _isLoading = false;
         });
@@ -121,6 +129,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                  textDirection: TextDirection.ltr,
                   onSaved: (value) => _currentPassword = value.trim(),
                   validator: (value) {
                     if (value.isEmpty)
@@ -154,6 +163,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 SizedBox(height: 14),
                 TextFormField(
+                  textDirection: TextDirection.ltr,
                   onSaved: (value) => _newPassword = value.trim(),
                   validator: (value) {
                     if (value.isEmpty)
@@ -161,6 +171,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                   focusNode: _newPasswordNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(_confirmPasswordNode),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(8),
                     label: Text(AppLocalizations.of(context).new_password),
@@ -192,6 +205,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           .error_confirm_password;
                     return null;
                   },
+                  textDirection: TextDirection.ltr,
                   focusNode: _confirmPasswordNode,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(8),

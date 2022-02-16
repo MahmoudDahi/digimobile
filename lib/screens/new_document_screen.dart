@@ -85,9 +85,9 @@ class NewDoucmentScreen extends StatelessWidget {
     }
   }
 
-  Future<bool> _showDialogLoading(
+  Future<String> _showDialogLoading(
       BuildContext context, String title, int documentType) async {
-    return await showDialog<bool>(
+    return await showDialog<String>(
         context: context,
         builder: (ctx) => SimpleDialog(
               children: [
@@ -96,8 +96,12 @@ class NewDoucmentScreen extends StatelessWidget {
                       .createNewDocument(_customerId, _dateTime,
                           _doucmentInternalId, documentType, _serviceId, _cost),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done)
-                      Navigator.of(ctx).pop(snapshot.data);
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.error != null)
+                        Navigator.of(ctx).pop(snapshot.error);
+                      else
+                        Navigator.of(ctx).pop(snapshot.data?null:AppLocalizations.of(context).failed,);
+                    }
                     return Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -139,18 +143,18 @@ class NewDoucmentScreen extends StatelessWidget {
     if (!valid) return;
     _formKey.currentState.save();
 
-    try {
+    
       final result = await _showDialogLoading(context, title, documentType);
 
-      if (result) return _showDialogWithMessage(context, title, null);
-      _showDialogWithMessage(
+     return  _showDialogWithMessage(
         context,
         title,
-        AppLocalizations.of(context).failed,
+       result!=null && result == '1'
+            ? AppLocalizations.of(context).no_internet_connection
+            : result,
       );
-    } catch (error) {
-      print(error);
-    }
+      
+    
   }
 
   @override

@@ -36,11 +36,13 @@ class User with ChangeNotifier {
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
       final resposne = await http.post(url, headers: {
-        'entity': entityID.toString(),
-        HttpHeaders.authorizationHeader: basicAuth,
+        "Entity": entityID.toString(),
+        "Authorization": basicAuth,
+        "Connection": "keep-alive",
+        "Accept": "application/json"
       });
 
-      print(resposne.statusCode);
+      print(resposne.reasonPhrase);
       if (resposne.statusCode != 200)
         throw ExceptionError('Username or Password not correct');
       final fetchData = json.decode(resposne.body)['CustomeRespons'];
@@ -53,8 +55,11 @@ class User with ChangeNotifier {
       _entityId = entityID;
       _companyName = companyName;
       await _fetchAndSetDataUser();
-    } catch (error) {
+    } on SocketException catch (error) {
       print(error.toString());
+      throw error;
+    } catch (error) {
+      print(error);
       throw error;
     }
   }

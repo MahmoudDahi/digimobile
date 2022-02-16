@@ -62,5 +62,6 @@
     "error_cost":"Please enter cost",
     "success":"Success",
     "failed":"Failed",
-    "loading":"Loading"
+    "loading":"Loading",
+    "no_internet_connection":"No internet Connection"
 }

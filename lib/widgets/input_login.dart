@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:digimobile/models/exception.dart';
 import 'package:digimobile/providers/entity.dart';
 import 'package:digimobile/providers/user.dart';
@@ -37,7 +39,7 @@ class _InputLoginState extends State<InputLogin> {
         _isLoading = true;
         _error = null;
       });
-      print(_Entity.id);
+
       try {
         await Provider.of<User>(context, listen: false)
             .loginUser(_userName, _password, _Entity.id, _Entity.title);
@@ -46,10 +48,18 @@ class _InputLoginState extends State<InputLogin> {
           _isLoading = false;
           _error = error.toString();
         });
-      } catch (error) {
+      } on SocketException catch (_) {
         setState(() {
           _isLoading = false;
-          _error = error.toString();
+          _error = AppLocalizations.of(context).no_internet_connection;
+        });
+      } catch (error) {
+        var stringError = error.toString();
+        if (stringError == 'Failed to parse header value')
+          stringError = 'Username or Password not correct';
+        setState(() {
+          _isLoading = false;
+          _error = stringError;
         });
       }
     }

@@ -138,7 +138,7 @@ class _RangeDateState extends State<RangeDate> {
                     decoration: InputDecoration(
                       errorText: _errorDocumentType,
                       label: Text(AppLocalizations.of(context).doucment_type),
-                      contentPadding: EdgeInsets.all(8),
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 0),
                       border: OutlineInputBorder(),
                     ),
                     items: [

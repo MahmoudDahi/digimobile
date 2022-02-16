@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:digimobile/models/constant.dart';
 import 'package:digimobile/providers/user.dart';
@@ -57,6 +58,8 @@ class Reports {
         loadingItem.add(ReportItem.fromJsonCustomer(json));
       });
       return loadingItem;
+    } on SocketException catch (_) {
+      throw '1';
     } catch (error) {
       throw error;
     } finally {
@@ -80,7 +83,9 @@ class Reports {
         loadingItem.add(ReportItem.fromJsonDoucment(json));
       });
       return loadingItem;
-    } catch (error) {
+    }on SocketException catch (_) {
+      throw '1';
+    }  catch (error) {
       throw error;
     } finally {
       token = null;
@@ -103,6 +108,8 @@ class Reports {
         loadingItem.add(ReportItem.fromJsonDoucment(json));
       });
       return loadingItem;
+    } on SocketException catch (_) {
+      throw '1';
     } catch (error) {
       throw error;
     } finally {
@@ -127,7 +134,9 @@ class Reports {
         loadingItem.add(ReportItem.fromJsonMOF(json));
       });
       return loadingItem;
-    } catch (error) {
+    }on SocketException catch (_) {
+      throw '1';
+    }  catch (error) {
       throw error;
     } finally {
       token = null;

@@ -23,8 +23,7 @@ class Entity with ChangeNotifier {
   Future<void> fetchAndSetData() async {
     if (_item.isNotEmpty) return;
     String _error;
-    int _start = 10;
-    const oneSec = const Duration(seconds: 1);
+
     final url = Uri.parse('${Constant().api1}/Accounts/GetEntitiesList');
     try {
       final response = await http.post(

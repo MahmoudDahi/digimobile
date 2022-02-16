@@ -17,6 +17,7 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
   bool _isloading = false;
   List<ReportItem> doucments;
   final regex = Constant().regex;
+  String _error;
   double widthScreen;
 
   void _confirmRange(
@@ -32,10 +33,15 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
       list = await Reports().getDocumentValues(start, end, doucmentId,
           Provider.of<User>(context, listen: false).entityId);
       setState(() {
+         _error = null;
         doucments = list;
       });
     } catch (error) {
-      print(error);
+      if (error.toString() == '1') {
+        _error = AppLocalizations.of(context).no_internet_connection;
+        return;
+      }
+      _error = error.toString();
     } finally {
       list = null;
       setState(() {
@@ -94,7 +100,7 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
       ),
       DataCell(
         Container(
-           alignment: AlignmentDirectional.centerStart,
+          alignment: AlignmentDirectional.centerStart,
           width: (widthScreen / 10) * 2,
           child: FittedBox(
             fit: BoxFit.scaleDown,
@@ -167,6 +173,7 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (_error != null) Constant().errorWidget(context, _error),
             RangeDate(_confirmRange, _isloading),
             SizedBox(height: 16),
             if (doucments != null && doucments.isNotEmpty)

@@ -2,6 +2,7 @@ import 'package:digimobile/widgets/range_date.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../models/constant.dart';
 import '../models/reports.dart';
 
 class DoucmentCountScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class DoucmentCountScreen extends StatefulWidget {
 class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
   bool _isloading = false;
   List<ReportItem> doucments;
+  String _error;
 
   void _confirmRange(
     DateTime start,
@@ -27,10 +29,15 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
     try {
       list = await Reports().getDocumentCount(start, end, doucmentId);
       setState(() {
+         _error = null;
         doucments = list;
       });
     } catch (error) {
-      print(error);
+      if (error.toString() == '1') {
+        _error = AppLocalizations.of(context).no_internet_connection;
+        return;
+      }
+      _error = error.toString();
     } finally {
       list = null;
       setState(() {
@@ -54,7 +61,10 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
     );
   }
 
-  DataRow _rowData(String title,int count,) {
+  DataRow _rowData(
+    String title,
+    int count,
+  ) {
     return DataRow(cells: [
       DataCell(
         Text(
@@ -77,11 +87,10 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
               .copyWith(fontWeight: FontWeight.w300),
         ),
       ),
-     
     ]);
   }
 
-  DataRow _rowDataTotal( int total) {
+  DataRow _rowDataTotal(int total) {
     return DataRow(cells: [
       DataCell(
         Text(
@@ -89,17 +98,16 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           style: Theme.of(context)
               .textTheme
               .headline1
-              .copyWith(color: Colors.black,fontWeight: FontWeight.bold),
+              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
-     
       DataCell(
         Text(
           total.toString(),
           style: Theme.of(context)
               .textTheme
               .headline1
-              .copyWith(color: Colors.black,fontWeight: FontWeight.bold),
+              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
     ]);
@@ -110,18 +118,18 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
     List<DataRow> rows = [];
     int total = 0;
 
-    if(doucments!=null && doucments.isNotEmpty){
-    doucments.forEach((doucment) {
-      rows.add(_rowData(
-        doucment.name,
-        doucment.doucmentNo,
-      ));
-      total += doucment.doucmentNo;
-    });
+    if (doucments != null && doucments.isNotEmpty) {
+      doucments.forEach((doucment) {
+        rows.add(_rowData(
+          doucment.name,
+          doucment.doucmentNo,
+        ));
+        total += doucment.doucmentNo;
+      });
 
-    rows.add(
-      _rowDataTotal( total),
-    );
+      rows.add(
+        _rowDataTotal(total),
+      );
     }
 
     return Scaffold(
@@ -132,6 +140,7 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (_error != null) Constant().errorWidget(context, _error),
             RangeDate(_confirmRange, _isloading),
             SizedBox(height: 16),
             if (doucments != null && doucments.isNotEmpty)

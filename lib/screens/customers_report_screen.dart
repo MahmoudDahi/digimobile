@@ -15,6 +15,7 @@ class CustomersReportScreen extends StatefulWidget {
 
 class _CustomersReportScreenState extends State<CustomersReportScreen> {
   bool _isloading = false;
+  String _error;
   final RegExp regex = Constant().regex;
   List<ReportItem> custReport;
 
@@ -30,10 +31,15 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
     try {
       list = await Reports().getCustomerReport(start, end, doucmentId);
       setState(() {
+        _error = null;
         custReport = list;
       });
     } catch (error) {
-      print(error);
+      if (error.toString() == '1') {
+        _error = AppLocalizations.of(context).no_internet_connection;
+        return;
+      }
+      _error = error.toString();
     } finally {
       list = null;
       setState(() {
@@ -50,6 +56,7 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
       ),
       body: Column(
         children: [
+          if (_error != null) Constant().errorWidget(context, _error),
           RangeDate(_confirmRange, _isloading),
           SizedBox(
             height: 10,
@@ -57,7 +64,7 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
           if (custReport != null && custReport.isNotEmpty)
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 itemBuilder: (context, index) => CustomerReportItem(
                   name: custReport[index].name,
                   count: custReport[index].doucmentNo,
@@ -76,7 +83,6 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-         
         ],
       ),
     );

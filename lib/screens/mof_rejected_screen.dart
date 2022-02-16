@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../models/constant.dart';
 import '../models/reports.dart';
 import '../widgets/range_date.dart';
 
@@ -17,23 +18,26 @@ class MOFRejectedScreen extends StatefulWidget {
 class _MOFRejectedScreenState extends State<MOFRejectedScreen> {
   bool _isloading = false;
   List<ReportItem> doucments;
+  String _error;
 
-void _confirmRange(
-    DateTime start,
-    DateTime end,
-    [int doucment]
-  ) async {
+  void _confirmRange(DateTime start, DateTime end, [int doucment]) async {
     setState(() {
       _isloading = true;
     });
     List<ReportItem> list;
     try {
-      list = await Reports().getMOFRejected(start, end,Provider.of<User>(context,listen: false).entityId);
+      list = await Reports().getMOFRejected(
+          start, end, Provider.of<User>(context, listen: false).entityId);
       setState(() {
+         _error = null;
         doucments = list;
       });
     } catch (error) {
-      print(error);
+      if (error.toString() == '1') {
+        _error = AppLocalizations.of(context).no_internet_connection;
+        return;
+      }
+      _error = error.toString();
     } finally {
       list = null;
       setState(() {
@@ -42,7 +46,7 @@ void _confirmRange(
     }
   }
 
-   DataColumn _columnData(String title) {
+  DataColumn _columnData(String title) {
     return DataColumn(
       label: Expanded(
         child: Text(
@@ -57,7 +61,10 @@ void _confirmRange(
     );
   }
 
-  DataRow _rowData(String reason,int count,) {
+  DataRow _rowData(
+    String reason,
+    int count,
+  ) {
     return DataRow(cells: [
       DataCell(
         Text(
@@ -80,10 +87,8 @@ void _confirmRange(
               .copyWith(fontWeight: FontWeight.w300),
         ),
       ),
-     
     ]);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +100,8 @@ void _confirmRange(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            RangeDate(_confirmRange, _isloading,false),
+            if (_error != null) Constant().errorWidget(context, _error),
+            RangeDate(_confirmRange, _isloading, false),
             SizedBox(height: 16),
             if (doucments != null && doucments.isNotEmpty)
               Padding(
@@ -107,7 +113,9 @@ void _confirmRange(
                     _columnData(AppLocalizations.of(context).reject_reason),
                     _columnData(AppLocalizations.of(context).doucments_count),
                   ],
-                  rows: doucments.map((e) => _rowData(e.name, e.doucmentNo)).toList() ,
+                  rows: doucments
+                      .map((e) => _rowData(e.name, e.doucmentNo))
+                      .toList(),
                 ),
               ),
             if (doucments != null && doucments.isEmpty)
@@ -124,6 +132,7 @@ void _confirmRange(
             ),
           ],
         ),
-      ),    );
+      ),
+    );
   }
 }

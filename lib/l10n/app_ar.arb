@@ -62,5 +62,6 @@
     "error_cost":"يرجي ادخال التكلفة",
     "success":"تم بنجاح",
     "failed":"خطأ",
-    "loading":"تحميل"
+    "loading":"تحميل",
+    "no_internet_connection":"لا يوجد اتصال بالانترنت"
 }

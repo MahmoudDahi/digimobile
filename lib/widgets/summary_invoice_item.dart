@@ -144,6 +144,7 @@ class SummaryInvoiceItem extends StatelessWidget {
           DataTable(
             dataRowHeight: 80,
             horizontalMargin: 12,
+            headingRowHeight: 60,
             columnSpacing: (widthScreen / 10) * 0.2,
             headingRowColor: MaterialStateProperty.all(Colors.grey[50]),
             columns: [

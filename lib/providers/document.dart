@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,8 @@ class Document with ChangeNotifier {
           documentType);
       final result = await _newInvoice(invoicesInternald, serviceId, cost);
       return result == 1;
+    } on SocketException catch (_) {
+      throw '1';
     } catch (error) {
       throw error;
     }
