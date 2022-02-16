@@ -1,6 +1,7 @@
 import 'package:digimobile/providers/customers.dart';
 import 'package:digimobile/providers/document.dart';
 import 'package:digimobile/widgets/digi_button.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -121,7 +122,7 @@ class NewDoucmentScreen extends StatelessWidget {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
-      lastDate: DateTime.now().add(Duration(days: 30)),
+      lastDate: DateTime.now(),
     );
     if (date == null) return;
     final time =
@@ -232,59 +233,50 @@ class NewDoucmentScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Consumer<Customers>(
-                      builder: (ctx, data, _) => DropdownButtonFormField(
-                        isExpanded: true,
-                        menuMaxHeight: 300,
+                      builder: (ctx, data, _) => DropdownSearch<Customer>(
+                        mode: Mode.MENU,
+                        maxHeight: 300,
                         validator: (value) {
                           if (value == null)
                             return AppLocalizations.of(context)
                                 .error_choose_customer;
                           return null;
                         },
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(16),
-                            label:
-                                Text(AppLocalizations.of(context).document_to),
-                            border: OutlineInputBorder()),
+                        itemAsString: (customer) => customer.name,
+                        showSearchBox: true,
+                        dropdownSearchDecoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                          label: Text(AppLocalizations.of(context).document_to),
+                          border: OutlineInputBorder(),
+                        ),
                         items: data.customerList.isNotEmpty
                             ? data.customerList
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(e.name),
-                                      value: e.id,
-                                    ))
-                                .toList()
                             : [],
-                        onChanged: (value) {
-                          _customerId = value;
-                        },
+                        onChanged: (value) => _customerId = value.id,
                       ),
                     ),
                     SizedBox(height: 8),
                     Consumer<Services>(
-                      builder: (ctx, data, _) => DropdownButtonFormField<int>(
-                        isExpanded: true,
-                        menuMaxHeight: 300,
+                      builder: (ctx, data, _) => DropdownSearch<Service>(
+                        mode: Mode.MENU,
+                        maxHeight: 300,
+                        itemAsString: (service) => service.name,
+                        items: data.services.isEmpty ? [] : data.services,
+                        dropdownSearchDecoration: InputDecoration(
+                          label: Text(AppLocalizations.of(context).services),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                          border: OutlineInputBorder(),
+                        ),
+                        showSearchBox: true,
                         validator: (value) {
                           if (value == null)
                             return AppLocalizations.of(context)
                                 .error_choose_service;
                           return null;
                         },
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(16),
-                            label: Text(AppLocalizations.of(context).services),
-                            border: OutlineInputBorder()),
-                        items: data.services.isNotEmpty
-                            ? data.services
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(e.name),
-                                      value: e.id,
-                                    ))
-                                .toList()
-                            : [],
-                        onChanged: (value) {
-                          _serviceId = value;
-                        },
+                        onChanged: (value) => _serviceId = value.id,
                       ),
                     ),
                     SizedBox(height: 8),

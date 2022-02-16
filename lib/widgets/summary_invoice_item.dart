@@ -58,7 +58,7 @@ class SummaryInvoiceItem extends StatelessWidget {
         ),
         DataCell(
           Container(
-            width: (widthScreen / 10) * 1,
+            width: (widthScreen / 10) * 1.5,
             alignment: AlignmentDirectional.centerStart,
             child: FittedBox(
               fit: BoxFit.scaleDown,
@@ -67,7 +67,7 @@ class SummaryInvoiceItem extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline1
-                    .copyWith(fontWeight: FontWeight.w300),
+                    .copyWith(fontWeight: FontWeight.w300,color: Colors.black),
               ),
             ),
           ),
@@ -83,7 +83,7 @@ class SummaryInvoiceItem extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline1
-                    .copyWith(fontWeight: FontWeight.w300),
+                    .copyWith(fontWeight: FontWeight.w300,color: Colors.black),
               ),
             ),
           ),

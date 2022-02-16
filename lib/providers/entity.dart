@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -21,6 +22,9 @@ class Entity with ChangeNotifier {
 
   Future<void> fetchAndSetData() async {
     if (_item.isNotEmpty) return;
+    String _error;
+    int _start = 10;
+    const oneSec = const Duration(seconds: 1);
     final url = Uri.parse('${Constant().api1}/Accounts/GetEntitiesList');
     try {
       final response = await http.post(
@@ -30,10 +34,12 @@ class Entity with ChangeNotifier {
       fetchData.forEach((json) {
         _item.add(EntityItem.fromJson(json));
       });
-      notifyListeners();
     } catch (error) {
       print('entity erorr $error');
-      throw error;
+      _error = error;
     }
+    await Future.delayed(Duration(seconds: 5));
+    if (_error != null) throw _error;
+    notifyListeners();
   }
 }
