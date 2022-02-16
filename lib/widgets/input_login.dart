@@ -93,6 +93,7 @@ class _InputLoginState extends State<InputLogin> {
           ),
           SizedBox(height: 16),
           TextFormField(
+            textDirection: TextDirection.ltr,
             onSaved: (value) => _password = value.trim(),
             validator: (value) {
               if (value.isEmpty)

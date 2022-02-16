@@ -22,11 +22,10 @@ class LoginScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
                       width: 100,
-                      height: 200,
+                      height: 100,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Image.asset(
@@ -48,6 +47,7 @@ class LoginScreen extends StatelessWidget {
                     Text(
                       AppLocalizations.of(context).login_title,
                       softWrap: true,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     SizedBox(
@@ -64,6 +64,9 @@ class LoginScreen extends StatelessWidget {
                           .textTheme
                           .headline6
                           .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    SizedBox(
+                      height: 8,
                     ),
                   ],
                 ),

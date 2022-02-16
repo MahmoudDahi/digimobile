@@ -100,7 +100,11 @@ class NewDoucmentScreen extends StatelessWidget {
                       if (snapshot.error != null)
                         Navigator.of(ctx).pop(snapshot.error);
                       else
-                        Navigator.of(ctx).pop(snapshot.data?null:AppLocalizations.of(context).failed,);
+                        Navigator.of(ctx).pop(
+                          snapshot.data
+                              ? null
+                              : AppLocalizations.of(context).failed,
+                        );
                     }
                     return Padding(
                       padding: const EdgeInsets.all(16),
@@ -143,18 +147,15 @@ class NewDoucmentScreen extends StatelessWidget {
     if (!valid) return;
     _formKey.currentState.save();
 
-    
-      final result = await _showDialogLoading(context, title, documentType);
+    final result = await _showDialogLoading(context, title, documentType);
 
-     return  _showDialogWithMessage(
-        context,
-        title,
-       result!=null && result == '1'
-            ? AppLocalizations.of(context).no_internet_connection
-            : result,
-      );
-      
-    
+    return _showDialogWithMessage(
+      context,
+      title,
+      result != null && result == '1'
+          ? AppLocalizations.of(context).no_internet_connection
+          : result,
+    );
   }
 
   @override
@@ -198,6 +199,8 @@ class NewDoucmentScreen extends StatelessWidget {
                         label: Text(
                             AppLocalizations.of(context).document_internal_id),
                         border: OutlineInputBorder(),
+                        contentPadding:
+                            const EdgeInsets.all(14),
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -222,6 +225,8 @@ class NewDoucmentScreen extends StatelessWidget {
                           controller: _dateController,
                           readOnly: true,
                           decoration: InputDecoration(
+                            contentPadding:
+                               const EdgeInsets.all(14),
                             label: Text(AppLocalizations.of(context)
                                 .document_issue_date),
                             border: OutlineInputBorder(),
@@ -286,6 +291,8 @@ class NewDoucmentScreen extends StatelessWidget {
                     SizedBox(height: 8),
                     TextFormField(
                       decoration: InputDecoration(
+                        contentPadding:
+                            const EdgeInsets.all(14),
                         label: Text(AppLocalizations.of(context).cost),
                         border: OutlineInputBorder(),
                       ),

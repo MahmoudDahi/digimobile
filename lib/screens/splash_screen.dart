@@ -23,12 +23,14 @@ class SplashScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'DIGI',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(color: Colors.white, fontSize: 86),
+                      FittedBox(
+                        child: Text(
+                          'DIGI',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(color: Colors.white, fontSize: 86),
+                        ),
                       ),
                       Stack(
                         alignment: Alignment.center,
