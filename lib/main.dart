@@ -1,3 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+
 import 'package:digimobile/providers/customers.dart';
 import 'package:digimobile/providers/document.dart';
 import 'package:digimobile/providers/services.dart';
@@ -10,18 +17,43 @@ import 'package:digimobile/screens/mof_rejected_screen.dart';
 import 'package:digimobile/screens/new_document_screen.dart';
 import 'package:digimobile/screens/splash_screen.dart';
 import 'package:digimobile/screens/summary_invoice_main_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
-
 import 'providers/app_language.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:digimobile/providers/entity.dart';
 import 'package:digimobile/providers/summary.dart';
 import 'package:digimobile/screens/login_screen.dart';
 
-void main() async {
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  description:
+      'This channel is used for important notifications.', // description
+  importance: Importance.high,
+  playSound: true,
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocal();
@@ -48,8 +80,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<User, Document>(
           create: (ctx) => Document(),
-          update: (ctx, user, dataPre) =>
-              Document(user.entityId),
+          update: (ctx, user, dataPre) => Document(user.entityId),
         ),
         ChangeNotifierProxyProvider<User, Summary>(
           create: (_) => Summary(),
@@ -67,7 +98,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Customers>(
           create: (_) => Customers(),
         ),
-         ChangeNotifierProvider<Services>(
+        ChangeNotifierProvider<Services>(
           create: (_) => Services(),
         ),
       ],

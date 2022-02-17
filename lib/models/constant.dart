@@ -23,6 +23,8 @@ class Constant {
     );
   }
 
+  
+
   MaterialColor generateMaterialColor(Color color) {
   return MaterialColor(color.value, {
     50: tintColor(color, 0.9),

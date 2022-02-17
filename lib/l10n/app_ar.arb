@@ -63,5 +63,7 @@
     "success":"تم بنجاح",
     "failed":"خطأ",
     "loading":"تحميل",
-    "no_internet_connection":"لا يوجد اتصال بالانترنت"
+    "no_internet_connection":"لا يوجد اتصال بالانترنت",
+    "save":"حفظ",
+    "done":"تم"
 }

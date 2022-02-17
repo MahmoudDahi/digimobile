@@ -63,5 +63,7 @@
     "success":"Success",
     "failed":"Failed",
     "loading":"Loading",
-    "no_internet_connection":"No internet Connection"
+    "no_internet_connection":"No internet Connection",
+    "save":"Save",
+    "done":"Done"
 }

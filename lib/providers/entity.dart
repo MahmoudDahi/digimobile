@@ -37,7 +37,7 @@ class Entity with ChangeNotifier {
       print('entity erorr $error');
       _error = error;
     }
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 2));
     if (_error != null) throw _error;
     notifyListeners();
   }

@@ -60,7 +60,7 @@ class NewDoucmentScreen extends StatelessWidget {
               ),
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
-                AppLocalizations.of(context).confirm,
+                AppLocalizations.of(context).done,
                 style: TextStyle(
                   color: error == null
                       ? Colors.green[400]
@@ -160,6 +160,8 @@ class NewDoucmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _dateTime = DateTime.now();
+    _dateController.text = DateFormat('yyyy-MM-dd hh:mm aa').format(_dateTime);
     final argment =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     final title = argment['title'];
@@ -199,8 +201,7 @@ class NewDoucmentScreen extends StatelessWidget {
                         label: Text(
                             AppLocalizations.of(context).document_internal_id),
                         border: OutlineInputBorder(),
-                        contentPadding:
-                            const EdgeInsets.all(14),
+                        contentPadding: const EdgeInsets.all(14),
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -225,8 +226,7 @@ class NewDoucmentScreen extends StatelessWidget {
                           controller: _dateController,
                           readOnly: true,
                           decoration: InputDecoration(
-                            contentPadding:
-                               const EdgeInsets.all(14),
+                            contentPadding: const EdgeInsets.all(14),
                             label: Text(AppLocalizations.of(context)
                                 .document_issue_date),
                             border: OutlineInputBorder(),
@@ -291,8 +291,7 @@ class NewDoucmentScreen extends StatelessWidget {
                     SizedBox(height: 8),
                     TextFormField(
                       decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.all(14),
+                        contentPadding: const EdgeInsets.all(14),
                         label: Text(AppLocalizations.of(context).cost),
                         border: OutlineInputBorder(),
                       ),
@@ -308,7 +307,7 @@ class NewDoucmentScreen extends StatelessWidget {
                     DigiButton(
                       onPressed: () =>
                           _submitNewDoucment(context, title, documentType),
-                      child: Text(title),
+                      child: Text(AppLocalizations.of(context).save),
                     ),
                   ],
                 ),

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "digimobile-683d2",
+  "private_key_id": "62b8edd9381bedb54c4a3480d40f127502f8251e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDUQHLz1UHPQ4QE\nGMgGJmlEiPg5OhB8eb5WvJRw+n0DJ9OVkh5FbypqAkuKI35plOEeyPO5PHoJBDm8\nMDKeS4YYh/3qocnbjYAiPCFPmk9Vlu7mowHKMDhMF3vVLHfUJCfIbDeRVrJWqSWO\n9UMpOH9HJdBN6JTg7YJDIIzM+Kz6Be4ngMs2imcLU9lUpnQMTdZ4VVPD4MLDuy0u\n2LfjBjsr+CA0wk5poEIzDfAPlvvlYaQH3OhvhXn8SEzc3eMRrxhT5fIEZqYDOW5j\nN+p++tlQxDp3uHnaZHnfDHQ7bJc2RWlTaShM4asgcJHuxOrQfIKsbxGPO+WXk2Dq\nKHQS0GS3AgMBAAECggEASZKRhh3M8whHMZhZdXBJGv2TdVrALjWRGcXCeqsJPFfI\nytbccVsIS7jB8H8/KV/27NHhUbs53fg9/xKB6Ubqk4RIKtWr/9O7r6JCNbKaf2OT\nKhUk4K34Rb/6J7mDS+DAfYOte06fANUe9L/laNtxmvrriqXtPU520cftpnsokn1s\nDeC3FJSzUjIydKVt4fhKZkIf9d3gcKrpyl0aubwiDfi6PyaXexi3WLmb5p9DuA5P\n4XAHkFsVhtbHIvaayISUDlOPMWYcfGSqqcauercU4T6E1oMGJR3hY3QNtoMMBH3H\nq15zV+ZZBoNBNqxYNVhWwdAGa9+JbgkZ9c6q1N6YsQKBgQDxWOrVmQfhDBX1uEoi\nU8cj0PTrKWihozeRB+RQ31AR4TjBbXspsmbLFM+hcSMqhjAEW7Rc82hR/JAZasPN\n2RJur0f9eS1uh1VA7c/euPBJin9EhjJModsC1EBmg9kPp715wcwnUIRyntZVeytv\njo9qNjY3dQpUmRYzJ/AGg7YOyQKBgQDhI1IY8MeXwh+lk4EhH7zjA7twGPGyac3m\n5Z4gDgkgcc8FQhQ72sx8+Ry6u2aeLxu3oicGBUYkrOZH0rnb5NVcvmqS112G7OVk\n3R+Pb+2Ds51SHO8p08ebveoSlDdxnBns1Cfr1GsvGR+hqPx4dHwCUPrs98ofu7av\nWrIJbVMXfwKBgQCSdv+suL4LWSZKhJiY1HbZyYmY3Pxee4rRPRTV72/MKf4jhKll\n2JqBTBPlSZ+pwt2JB44hiqYYe0mH4z8IwV9qRH1P2iY0GXUnfirUYy+PsbkigL4t\nu1wKD301uXYVBhr6tR2MDlUSqkowfhsSDFYEgvnMFf8679yFFwuXKH9n4QKBgQCa\nylEQysM/6P0fNzpKDussXg2KNew/kZU6klbUjTHjN7xxTgxhVr7PkesZy+zzB0qU\nSA1yiz+9yY6OhSi6MiwsFtNpYF9yfAAACDRBx1/S9DRPF4usA2qy/rEn0vYHy57b\ngMZt019aQ3jHCkuDefslEI5lTLyQctxY1g+ggaTmewKBgA/i+Ol/UM2goJujA2cc\nw16yGKWmwIlfN5EtZGiiDEYmKYjlFbqSMK2TyRIYJE69DKhBrTOXWXRnGKN2p7dE\nrKGmO6aV2s4c17I3v/g9VUdjvIVaGxRcrueTfZPONcvZaA3f2byfgQVH7crXIiyE\nuH1QOasafKkXg8ZMgprLYGs2\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-p4xdj@digimobile-683d2.iam.gserviceaccount.com",
+  "client_id": "105722258148026490910",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-p4xdj%40digimobile-683d2.iam.gserviceaccount.com"
+}

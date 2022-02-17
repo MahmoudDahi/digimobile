@@ -1,6 +1,12 @@
+import 'package:digimobile/main.dart';
+import 'package:digimobile/screens/customers_report_screen.dart';
 import 'package:digimobile/screens/new_document_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -9,13 +15,151 @@ import '../providers/summary.dart';
 import '../widgets/app_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SummaryInvoiceMainScreen extends StatelessWidget {
+class SummaryInvoiceMainScreen extends StatefulWidget {
+  @override
+  State<SummaryInvoiceMainScreen> createState() =>
+      _SummaryInvoiceMainScreenState();
+}
+
+class _SummaryInvoiceMainScreenState extends State<SummaryInvoiceMainScreen> {
+  void initState() {
+    super.initState();
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        Navigator.pushNamed(
+          context,
+          CustomersReportScreen.routeName,
+        );
+      }
+    });
+
+    FirebaseMessaging.instance
+        .getToken()
+        .then((value) => print('token : $value'));
+
+    FirebaseMessaging.onMessage
+        .listen((RemoteMessage message) => _showNotification(message));
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      Navigator.pushNamed(
+        context,
+        CustomersReportScreen.routeName,
+      );
+    });
+  }
+
+  Future<void> _showNotification(RemoteMessage message) async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (_) {
+      Navigator.pushNamed(
+        context,
+        CustomersReportScreen.routeName,
+      );
+    });
+
+    final notification = message.notification;
+
+    if (notification != null) {
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            fullScreenIntent: true,
+            color: Colors.deepPurple,
+            playSound: true,
+            icon: '@drawable/digi_notifi',
+          ),
+        ),
+        payload: message.data['code'],
+      );
+    }
+  }
+
+  void _navigatorToNew(BuildContext context, Map<String, dynamic> value) {
+    Navigator.of(context)
+        .pushNamed(NewDoucmentScreen.routeName, arguments: value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final popup = PopupMenuButton(
+      icon: Icon(Icons.add),
+      onSelected: (value) {
+        Navigator.of(context)
+            .pushNamed(NewDoucmentScreen.routeName, arguments: value);
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: Text(AppLocalizations.of(context).new_invoice),
+          value: {
+            'title': AppLocalizations.of(context).new_invoice,
+            'id': 1,
+          },
+        ),
+        PopupMenuItem(
+          child: Text(AppLocalizations.of(context).new_credit),
+          value: {
+            'title': AppLocalizations.of(context).new_credit,
+            'id': 2,
+          },
+        ),
+        PopupMenuItem(
+          child: Text(AppLocalizations.of(context).new_debit),
+          value: {
+            'title': AppLocalizations.of(context).new_debit,
+            'id': 3,
+          },
+        ),
+      ],
+    );
     final mediaWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       drawer: AppDrawer(),
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        overlayOpacity: .0,
+        children: [
+          SpeedDialChild(
+            onTap: () => _navigatorToNew(context, {
+              'title': AppLocalizations.of(context).new_invoice,
+              'id': 1,
+            }),
+            label: AppLocalizations.of(context).new_invoice,
+          ),
+          SpeedDialChild(
+            onTap: () => _navigatorToNew(context, {
+              'title': AppLocalizations.of(context).new_credit,
+              'id': 2,
+            }),
+            label: AppLocalizations.of(context).new_credit,
+          ),
+          SpeedDialChild(
+            onTap: () => _navigatorToNew(context, {
+              'title': AppLocalizations.of(context).new_debit,
+              'id': 3,
+            }),
+            label: AppLocalizations.of(context).new_debit,
+          ),
+        ],
+      ),
       appBar: AppBar(
         title: Text('DigiMobile'),
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -24,36 +168,7 @@ class SummaryInvoiceMainScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
         ),
         actions: [
-          PopupMenuButton(
-            icon: Icon(Icons.add),
-            onSelected: (value) {
-              Navigator.of(context)
-                  .pushNamed(NewDoucmentScreen.routeName, arguments: value);
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text(AppLocalizations.of(context).new_invoice),
-                value: {
-                  'title': AppLocalizations.of(context).new_invoice,
-                  'id': 1,
-                },
-              ),
-              PopupMenuItem(
-                child: Text(AppLocalizations.of(context).new_credit),
-                value: {
-                  'title': AppLocalizations.of(context).new_credit,
-                  'id': 2,
-                },
-              ),
-              PopupMenuItem(
-                child: Text(AppLocalizations.of(context).new_debit),
-                value: {
-                  'title': AppLocalizations.of(context).new_debit,
-                  'id': 3,
-                },
-              ),
-            ],
-          )
+          popup,
         ],
       ),
       body: RefreshIndicator(
@@ -102,15 +217,16 @@ class SummaryInvoiceMainScreen extends StatelessWidget {
                 ),
               ),
               FutureBuilder(
-                  future: Provider.of<Summary>(context, listen: false)
-                      .fetchDataAndSet(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting)
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                future: Provider.of<Summary>(context, listen: false)
+                    .fetchDataAndSet(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
 
-                    return Consumer<Summary>(builder: (ctx, summary, _) {
+                  return Consumer<Summary>(
+                    builder: (ctx, summary, _) {
                       {
                         if (snapshot.error != null && summary.invoices == null)
                           return Container(
@@ -160,8 +276,13 @@ class SummaryInvoiceMainScreen extends StatelessWidget {
                           ],
                         );
                       }
-                    });
-                  }),
+                    },
+                  );
+                },
+              ),
+              SizedBox(
+                height: 60,
+              )
             ],
           ),
         ),

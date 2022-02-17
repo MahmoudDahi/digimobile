@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1058971325165",
+    "project_id": "digimobile-683d2",
+    "storage_bucket": "digimobile-683d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058971325165:android:e5c2cdc478751c381df2e4",
+        "android_client_info": {
+          "package_name": "com.digifin.digimobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058971325165-pm38o5gg7ks7ut2bighrrav3o806d75g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk1yhc1_-tLtvObF31GtbByZCiPJJoXVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058971325165-pm38o5gg7ks7ut2bighrrav3o806d75g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
