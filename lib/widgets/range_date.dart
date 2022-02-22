@@ -76,10 +76,7 @@ class _RangeDateState extends State<RangeDate> {
             child: Text(
               hint,
               textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1
-                  .copyWith(color: Colors.black),
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Container(

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../providers/user.dart';
-import '../providers/app_language.dart';
+import '../providers/app_setting.dart';
 import '../screens/change_password_screen.dart';
 import '../screens/document_count_screen.dart';
 import '../screens/customers_report_screen.dart';
@@ -14,7 +14,10 @@ class AppDrawer extends StatelessWidget {
   Widget _listTitleItem(
       BuildContext context, String title, IconData icon, Function onTap) {
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.headline2,
+      ),
       leading: Icon(
         icon,
         color: Theme.of(context).primaryColor,
@@ -60,9 +63,7 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(CustomersReportScreen.routeName);
             }),
-             _listTitleItem(
-                context,
-                AppLocalizations.of(context).mof_rejected,
+            _listTitleItem(context, AppLocalizations.of(context).mof_rejected,
                 Icons.note_alt_rounded, () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(MOFRejectedScreen.routeName);
@@ -88,11 +89,29 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(ChangePasswordScreen.routeName);
             }),
+            Consumer<AppSetting>(
+              builder: (ctx, sett, _) => ListTile(
+                title: Text(
+                  AppLocalizations.of(context).dark_theme,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                leading: Icon(
+                  Icons.style,
+                  color: Theme.of(context).primaryColor,
+                ),
+                trailing: Switch.adaptive(
+                  value: sett.isDark,
+                  onChanged: (value) {
+                    sett.changeTheme(value);
+                  },
+                ),
+              ),
+            ),
             _listTitleItem(
                 context,
                 AppLocalizations.of(context).change_language,
                 Icons.language_outlined, () {
-              Provider.of<AppLanguage>(context, listen: false).changeLanguage();
+              Provider.of<AppSetting>(context, listen: false).changeLanguage();
             }),
             _listTitleItem(context, AppLocalizations.of(context).logout,
                 Icons.logout_rounded, () {

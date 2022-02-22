@@ -36,10 +36,7 @@ class CustomerReportItem extends StatelessWidget {
               child: Text(
                 value.toString().replaceAll(regex, ''),
                 textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(color: Colors.black),
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
           ),
@@ -62,11 +59,7 @@ class CustomerReportItem extends StatelessWidget {
             Text(
               name,
               softWrap: true,
-              style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+              style: Theme.of(context).textTheme.headline2,
             ),
             SizedBox(
               height: 4,
@@ -82,8 +75,8 @@ class CustomerReportItem extends StatelessWidget {
                       context, AppLocalizations.of(context).total_tax, tax),
                 ),
                 Flexible(
-                  child: _valueWithTitle(
-                      context, AppLocalizations.of(context).total_amount, total),
+                  child: _valueWithTitle(context,
+                      AppLocalizations.of(context).total_amount, total),
                 ),
               ],
             )

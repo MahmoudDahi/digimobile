@@ -22,10 +22,7 @@ class SummaryInvoiceItem extends StatelessWidget {
       cells: [
         DataCell(Text(
           AppLocalizations.of(context).total,
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              .copyWith(fontWeight: FontWeight.bold, color: Colors.grey[800]),
+          style: Theme.of(context).textTheme.headline3,
         )),
         DataCell(Container()),
         DataCell(
@@ -33,8 +30,7 @@ class SummaryInvoiceItem extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               total.toStringAsFixed(2).replaceAll(regex, ''),
-              style: Theme.of(context).textTheme.headline1.copyWith(
-                  fontWeight: FontWeight.bold, color: Colors.grey[800]),
+              style: Theme.of(context).textTheme.headline3,
             ),
           ),
         ),
@@ -64,10 +60,7 @@ class SummaryInvoiceItem extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 tax.toStringAsFixed(2).replaceAll(regex, ''),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontWeight: FontWeight.w300,color: Colors.black),
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
           ),
@@ -80,10 +73,7 @@ class SummaryInvoiceItem extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 amount.toStringAsFixed(2).replaceAll(regex, ''),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontWeight: FontWeight.w300,color: Colors.black),
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
           ),
@@ -146,7 +136,8 @@ class SummaryInvoiceItem extends StatelessWidget {
             horizontalMargin: 12,
             headingRowHeight: 60,
             columnSpacing: (widthScreen / 10) * 0.2,
-            headingRowColor: MaterialStateProperty.all(Colors.grey[50]),
+            headingRowColor:
+                MaterialStateProperty.all(Theme.of(context).hoverColor),
             columns: [
               DataColumn(
                 label: Text(

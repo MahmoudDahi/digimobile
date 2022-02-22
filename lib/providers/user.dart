@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:digimobile/models/exception.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -81,6 +82,8 @@ class User with ChangeNotifier {
       _displayName = fetchData.first['DisplayName'];
       _profileImage = fetchData.first['ProfileImage'];
       await _saveUser();
+      String fcmToken = await FirebaseMessaging.instance.getToken();
+
       notifyListeners();
     } catch (error) {
       throw 'Network Error';
@@ -153,6 +156,7 @@ class User with ChangeNotifier {
     _profileImage = null;
     _userID = null;
     _userName = null;
+    await FirebaseMessaging.instance.deleteToken();
     notifyListeners();
   }
 

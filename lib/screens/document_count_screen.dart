@@ -54,8 +54,7 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           softWrap: true,
           style: Theme.of(context)
               .textTheme
-              .headline1
-              .copyWith(fontWeight: FontWeight.bold, color: Colors.grey[800]),
+              .headline3,
         ),
       ),
     );
@@ -74,8 +73,8 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context)
               .textTheme
-              .headline1
-              .copyWith(color: Colors.black),
+              .headline2
+              ,
         ),
       ),
       DataCell(
@@ -83,8 +82,7 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           count.toString(),
           style: Theme.of(context)
               .textTheme
-              .headline1
-              .copyWith(fontWeight: FontWeight.w300),
+              .headline3,
         ),
       ),
     ]);
@@ -97,8 +95,8 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           AppLocalizations.of(context).total,
           style: Theme.of(context)
               .textTheme
-              .headline1
-              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+              .headline3
+              ,
         ),
       ),
       DataCell(
@@ -106,8 +104,7 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
           total.toString(),
           style: Theme.of(context)
               .textTheme
-              .headline1
-              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+              .headline3,
         ),
       ),
     ]);
@@ -148,7 +145,7 @@ class _DoucmentCountScreenState extends State<DoucmentCountScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: DataTable(
                   dataRowHeight: 60,
-                  headingRowColor: MaterialStateProperty.all(Colors.grey[200]),
+                  headingRowColor: MaterialStateProperty.all(Theme.of(context).hoverColor),
                   columns: [
                     _columnData(AppLocalizations.of(context).status),
                     _columnData(AppLocalizations.of(context).doucments_count),

@@ -65,5 +65,6 @@
     "loading":"Loading",
     "no_internet_connection":"No internet Connection",
     "save":"Save",
-    "done":"Done"
+    "done":"Done",
+    "dark_theme":"Dark Theme"
 }

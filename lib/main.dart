@@ -17,7 +17,7 @@ import 'package:digimobile/screens/mof_rejected_screen.dart';
 import 'package:digimobile/screens/new_document_screen.dart';
 import 'package:digimobile/screens/splash_screen.dart';
 import 'package:digimobile/screens/summary_invoice_main_screen.dart';
-import 'providers/app_language.dart';
+import 'providers/app_setting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:digimobile/providers/entity.dart';
 import 'package:digimobile/providers/summary.dart';
@@ -55,24 +55,26 @@ Future<void> main() async {
     sound: true,
   );
 
-  AppLanguage appLanguage = AppLanguage();
-  await appLanguage.fetchLocal();
+  AppSetting appSetting = AppSetting();
+  await appSetting.fetchLocal();
   runApp(MyApp(
-    appLanguage: appLanguage,
+    appLanguage: appSetting,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  final AppLanguage appLanguage;
+  final AppSetting appLanguage;
 
   MyApp({this.appLanguage});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final darkColor = Colors.deepPurple;
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppLanguage>(
+        ChangeNotifierProvider<AppSetting>(
           create: (_) => appLanguage,
         ),
         ChangeNotifierProvider<User>(
@@ -102,11 +104,11 @@ class MyApp extends StatelessWidget {
           create: (_) => Services(),
         ),
       ],
-      child: Consumer<AppLanguage>(
-        builder: (ctx, lang, _) => MaterialApp(
+      child: Consumer<AppSetting>(
+        builder: (ctx, sett, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'DigiMobile',
-          locale: lang.appLocal,
+          locale: sett.appLocal,
           localizationsDelegates: [
             AppLocalizations.delegate, // Add this line
             GlobalMaterialLocalizations.delegate,
@@ -117,6 +119,57 @@ class MyApp extends StatelessWidget {
             Locale('en', ''), // English, no country code
             Locale('ar', ''), // Arabic, no country code
           ],
+          themeMode: sett.themeMode,
+          darkTheme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            brightness: Brightness.dark,
+
+            appBarTheme: AppBarTheme(backgroundColor: darkColor),
+            switchTheme: SwitchThemeData(
+              thumbColor: MaterialStateProperty.all(darkColor),
+              trackColor: MaterialStateProperty.all(darkColor),
+            ),
+            primaryColor: darkColor,
+
+            drawerTheme: DrawerThemeData(
+              backgroundColor: Colors.grey.shade800,
+            ),
+            floatingActionButtonTheme:
+                FloatingActionButtonThemeData(backgroundColor: darkColor),
+            cardColor: Colors.grey.shade900,
+            hoverColor: Colors.black26,
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white70),
+              headline1: TextStyle(
+                fontSize: 16,
+                color: Colors.white60,
+              ),
+              headline2: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
+                color: Colors.white,
+              ),
+              headline3: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white70,
+              ),
+            ),
+            primarySwatch: darkColor,
+
+            fontFamily: sett.currentFont,
+          ),
           theme: ThemeData(
             // This is the theme of your application.
             //
@@ -127,15 +180,31 @@ class MyApp extends StatelessWidget {
             // or simply save your changes to "hot reload" in a Flutter IDE).
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
+            brightness: Brightness.light,
+            hoverColor: Colors.grey[200],
             textTheme: TextTheme(
               headline6: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.grey[800]),
-              headline1: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              headline1: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+              headline2: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
+                color: Colors.black,
+              ),
+              headline3: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+              ),
             ),
             primarySwatch: Colors.deepPurple,
-            fontFamily: lang.currentFont,
+
+            fontFamily: sett.currentFont,
           ),
           home: Consumer<Entity>(
             builder: (ctx, entity, _) => FutureBuilder(

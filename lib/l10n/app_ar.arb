@@ -65,5 +65,6 @@
     "loading":"تحميل",
     "no_internet_connection":"لا يوجد اتصال بالانترنت",
     "save":"حفظ",
-    "done":"تم"
+    "done":"تم",
+    "dark_theme":"اللون الداكن"
 }

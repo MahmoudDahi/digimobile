@@ -29,7 +29,7 @@ class _MOFRejectedScreenState extends State<MOFRejectedScreen> {
       list = await Reports().getMOFRejected(
           start, end, Provider.of<User>(context, listen: false).entityId);
       setState(() {
-         _error = null;
+        _error = null;
         doucments = list;
       });
     } catch (error) {
@@ -52,10 +52,7 @@ class _MOFRejectedScreenState extends State<MOFRejectedScreen> {
         child: Text(
           title,
           softWrap: true,
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              .copyWith(fontWeight: FontWeight.bold, color: Colors.grey[800]),
+          style: Theme.of(context).textTheme.headline3,
         ),
       ),
     );
@@ -72,19 +69,13 @@ class _MOFRejectedScreenState extends State<MOFRejectedScreen> {
           softWrap: true,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              .copyWith(color: Colors.black),
+          style: Theme.of(context).textTheme.headline2,
         ),
       ),
       DataCell(
         Text(
           count.toString(),
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              .copyWith(fontWeight: FontWeight.w300),
+          style: Theme.of(context).textTheme.headline2,
         ),
       ),
     ]);
@@ -108,7 +99,7 @@ class _MOFRejectedScreenState extends State<MOFRejectedScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: DataTable(
                   dataRowHeight: 60,
-                  headingRowColor: MaterialStateProperty.all(Colors.grey[200]),
+                  headingRowColor: MaterialStateProperty.all(Theme.of(context).hoverColor),
                   columns: [
                     _columnData(AppLocalizations.of(context).reject_reason),
                     _columnData(AppLocalizations.of(context).doucments_count),

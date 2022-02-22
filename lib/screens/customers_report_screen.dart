@@ -51,7 +51,7 @@ class _CustomersReportScreenState extends State<CustomersReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+     
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).customers_report),
       ),

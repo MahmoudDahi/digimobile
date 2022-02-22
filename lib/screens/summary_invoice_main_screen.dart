@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:provider/provider.dart';
 
@@ -44,7 +43,6 @@ class _SummaryInvoiceMainScreenState extends State<SummaryInvoiceMainScreen> {
         .listen((RemoteMessage message) => _showNotification(message));
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
       Navigator.pushNamed(
         context,
         CustomersReportScreen.routeName,
@@ -92,11 +90,6 @@ class _SummaryInvoiceMainScreenState extends State<SummaryInvoiceMainScreen> {
     }
   }
 
-  void _navigatorToNew(BuildContext context, Map<String, dynamic> value) {
-    Navigator.of(context)
-        .pushNamed(NewDoucmentScreen.routeName, arguments: value);
-  }
-
   @override
   Widget build(BuildContext context) {
     final popup = PopupMenuButton(
@@ -107,21 +100,30 @@ class _SummaryInvoiceMainScreenState extends State<SummaryInvoiceMainScreen> {
       },
       itemBuilder: (context) => [
         PopupMenuItem(
-          child: Text(AppLocalizations.of(context).new_invoice),
+          child: Text(
+            AppLocalizations.of(context).new_invoice,
+            style: Theme.of(context).textTheme.headline2,
+          ),
           value: {
             'title': AppLocalizations.of(context).new_invoice,
             'id': 1,
           },
         ),
         PopupMenuItem(
-          child: Text(AppLocalizations.of(context).new_credit),
+          child: Text(
+            AppLocalizations.of(context).new_credit,
+            style: Theme.of(context).textTheme.headline2,
+          ),
           value: {
             'title': AppLocalizations.of(context).new_credit,
             'id': 2,
           },
         ),
         PopupMenuItem(
-          child: Text(AppLocalizations.of(context).new_debit),
+          child: Text(
+            AppLocalizations.of(context).new_debit,
+            style: Theme.of(context).textTheme.headline2,
+          ),
           value: {
             'title': AppLocalizations.of(context).new_debit,
             'id': 3,
@@ -133,32 +135,10 @@ class _SummaryInvoiceMainScreenState extends State<SummaryInvoiceMainScreen> {
 
     return Scaffold(
       drawer: AppDrawer(),
-      floatingActionButton: SpeedDial(
-        icon: Icons.add,
-        overlayOpacity: .0,
-        children: [
-          SpeedDialChild(
-            onTap: () => _navigatorToNew(context, {
-              'title': AppLocalizations.of(context).new_invoice,
-              'id': 1,
-            }),
-            label: AppLocalizations.of(context).new_invoice,
-          ),
-          SpeedDialChild(
-            onTap: () => _navigatorToNew(context, {
-              'title': AppLocalizations.of(context).new_credit,
-              'id': 2,
-            }),
-            label: AppLocalizations.of(context).new_credit,
-          ),
-          SpeedDialChild(
-            onTap: () => _navigatorToNew(context, {
-              'title': AppLocalizations.of(context).new_debit,
-              'id': 3,
-            }),
-            label: AppLocalizations.of(context).new_debit,
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+       
+        onPressed: () {},
+        child: popup,
       ),
       appBar: AppBar(
         title: Text('DigiMobile'),

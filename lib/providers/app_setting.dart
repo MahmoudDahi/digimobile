@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AppLanguage with ChangeNotifier {
-  static const _languageKey = 'language-code';
+class AppSetting with ChangeNotifier {
+  final _languageKey = 'language-code';
+  final _themeKey = 'theme-mode';
   Locale _currentLanguage = Locale("en");
+
+  ThemeMode _themeMode = ThemeMode.light;
+
+  bool get isDark => _themeMode == ThemeMode.dark;
+
+  void changeTheme(bool isDarkvalue) async {
+    _themeMode = isDarkvalue ? ThemeMode.dark : ThemeMode.light;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_themeKey, isDarkvalue);
+    notifyListeners();
+  }
+
+  ThemeMode get themeMode => _themeMode;
 
   Locale get appLocal => _currentLanguage;
 
@@ -18,11 +32,11 @@ class AppLanguage with ChangeNotifier {
 
   fetchLocal() async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey(_languageKey)) {
-      return Null;
+    if (prefs.containsKey(_languageKey)) {
+      _currentLanguage = Locale(prefs.getString(_languageKey));
     }
-    _currentLanguage = Locale(prefs.getString(_languageKey));
-    return Null;
+    if (prefs.containsKey(_themeKey))
+      _themeMode = prefs.getBool(_themeKey) ? ThemeMode.dark : ThemeMode.light;
   }
 
   void changeLanguage() async {
