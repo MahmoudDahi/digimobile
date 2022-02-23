@@ -3,6 +3,7 @@ import 'package:digimobile/widgets/range_date.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../models/constant.dart';
 import '../models/reports.dart';
@@ -16,7 +17,8 @@ class DoucmentsValuesScreen extends StatefulWidget {
 class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
   bool _isloading = false;
   List<ReportItem> doucments;
-  final regex = Constant().regex;
+  final numberFormat = NumberFormat.decimalPattern('en_us');
+
   String _error;
   double widthScreen;
 
@@ -83,7 +85,7 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              tax.toStringAsFixed(2).replaceAll(regex, ''),
+              numberFormat.format(tax),
               style: Theme.of(context).textTheme.headline2,
             ),
           ),
@@ -92,11 +94,11 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
       DataCell(
         Container(
           alignment: AlignmentDirectional.centerStart,
-          width: (widthScreen / 10) * 2,
+          width: (widthScreen / 10) * 2.5,
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              total.toStringAsFixed(2).replaceAll(regex, ''),
+              numberFormat.format(total),
               style: Theme.of(context).textTheme.headline2,
             ),
           ),
@@ -115,11 +117,15 @@ class _DoucmentsValuesScreenState extends State<DoucmentsValuesScreen> {
       ),
       DataCell(Container()),
       DataCell(
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            total.toStringAsFixed(2).replaceAll(regex, ''),
-            style: Theme.of(context).textTheme.headline3,
+        Container(
+          alignment: AlignmentDirectional.centerStart,
+          width: (widthScreen / 10) * 2.5,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              numberFormat.format(total),
+              style: Theme.of(context).textTheme.headline3,
+            ),
           ),
         ),
       ),

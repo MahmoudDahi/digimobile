@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../models/constant.dart';
 import '../providers/summary.dart';
 
 class SummaryInvoiceItem extends StatelessWidget {
   final String title;
   final List<SummaryItem> summaryItem;
-  final RegExp regex = Constant().regex;
   final widthScreen;
+  final numberFormat = NumberFormat.decimalPattern('en_us');
 
   SummaryInvoiceItem(this.title, this.summaryItem, this.widthScreen);
 
@@ -26,11 +25,15 @@ class SummaryInvoiceItem extends StatelessWidget {
         )),
         DataCell(Container()),
         DataCell(
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              total.toStringAsFixed(2).replaceAll(regex, ''),
-              style: Theme.of(context).textTheme.headline3,
+          Container(
+            width: (widthScreen / 10) * 2.5,
+            alignment: AlignmentDirectional.centerStart,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                numberFormat.format(total),
+                style: Theme.of(context).textTheme.headline3,
+              ),
             ),
           ),
         ),
@@ -44,6 +47,7 @@ class SummaryInvoiceItem extends StatelessWidget {
       cells: [
         DataCell(
           Container(
+            alignment: AlignmentDirectional.centerStart,
             width: (widthScreen / 10) * 3.5,
             child: Text(statusTitle,
                 softWrap: true,
@@ -54,12 +58,12 @@ class SummaryInvoiceItem extends StatelessWidget {
         ),
         DataCell(
           Container(
-            width: (widthScreen / 10) * 1.5,
             alignment: AlignmentDirectional.centerStart,
+            width: (widthScreen / 10) * 1.5,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                tax.toStringAsFixed(2).replaceAll(regex, ''),
+                numberFormat.format(tax),
                 style: Theme.of(context).textTheme.headline2,
               ),
             ),
@@ -67,12 +71,12 @@ class SummaryInvoiceItem extends StatelessWidget {
         ),
         DataCell(
           Container(
-            width: (widthScreen / 10) * 2.5,
             alignment: AlignmentDirectional.centerStart,
+            width: (widthScreen / 10) * 2.5,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                amount.toStringAsFixed(2).replaceAll(regex, ''),
+                numberFormat.format(amount),
                 style: Theme.of(context).textTheme.headline2,
               ),
             ),
@@ -133,23 +137,27 @@ class SummaryInvoiceItem extends StatelessWidget {
           SizedBox(height: 12),
           DataTable(
             dataRowHeight: 80,
-            horizontalMargin: 12,
+            horizontalMargin: 8,
             headingRowHeight: 60,
             columnSpacing: (widthScreen / 10) * 0.2,
             headingRowColor:
                 MaterialStateProperty.all(Theme.of(context).hoverColor),
             columns: [
               DataColumn(
-                label: Text(
-                  AppLocalizations.of(context).status,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(fontWeight: FontWeight.bold),
+                label: Container(
+                  width: (widthScreen / 10) * 3.5,
+                  child: Text(
+                    AppLocalizations.of(context).status,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               DataColumn(
-                label: Expanded(
+                label: Container(
+                  width: (widthScreen / 10) * 1.5,
                   child: Text(
                     AppLocalizations.of(context).total_tax,
                     softWrap: true,
@@ -161,7 +169,8 @@ class SummaryInvoiceItem extends StatelessWidget {
                 ),
               ),
               DataColumn(
-                label: Expanded(
+                label: Container(
+                  width: (widthScreen / 10) * 2.5,
                   child: Text(
                     AppLocalizations.of(context).total_amount,
                     softWrap: true,

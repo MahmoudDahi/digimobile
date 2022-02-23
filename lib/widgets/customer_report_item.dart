@@ -1,5 +1,5 @@
-import 'package:digimobile/models/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,7 +8,7 @@ class CustomerReportItem extends StatelessWidget {
   final int count;
   final double tax;
   final double total;
-  final regex = Constant().regex;
+  final numberFormat = NumberFormat.decimalPattern('en_us');
 
   CustomerReportItem({
     @required this.name,
@@ -34,7 +34,7 @@ class CustomerReportItem extends StatelessWidget {
               fit: BoxFit.scaleDown,
               alignment: AlignmentDirectional.centerStart,
               child: Text(
-                value.toString().replaceAll(regex, ''),
+                numberFormat.format(value),
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.headline2,
               ),
