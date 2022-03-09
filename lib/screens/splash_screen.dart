@@ -1,3 +1,4 @@
+import 'package:digimobile/widgets/animation_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,42 +20,41 @@ class SplashScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          'DIGI',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6
-                              .copyWith(color: Colors.white, fontSize: 86),
+                  child: Center(
+                    child: AntimationCircle(
+                      secondColor: Colors.deepPurple,
+                      firstColor: Color.fromARGB(255, 153, 102, 255),
+                      firstSize: 100,
+                      SecondSize: 300,
+                      child: FittedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FittedBox(
+                              child: Text(
+                                'DIGI',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .copyWith(
+                                        color: Colors.white, fontSize: 86),
+                              ),
+                            ),
+                            Text(
+                                      'Mobile',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline1
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontSize: 32),
+                                              textAlign: TextAlign.center,
+                                    ),
+                          ],
                         ),
                       ),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 200,
-                            child: Divider(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Positioned(
-                            child: Container(
-                              decoration: BoxDecoration(color:Color.fromARGB(255, 153, 102, 255) ),
-                                child: Text(
-                              'Mobile',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  .copyWith(color: Colors.white, fontSize: 32),
-                            )),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
                 ),
                 Text(

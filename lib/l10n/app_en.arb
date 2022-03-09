@@ -66,5 +66,18 @@
     "no_internet_connection":"No internet Connection",
     "save":"Save",
     "done":"Done",
-    "dark_theme":"Dark Theme"
+    "dark_theme":"Dark Theme",
+    "payment":"Payments",
+    "vat":"VAT (%14)",
+    "service_tax":"Service Tax",
+    "withholding_tax":"Withholding Tax",
+    "table_tax":"Table Tax",
+    "balance":"Balance",
+    "enter_amount":"Enter Amount",
+    "next":"Next",
+    "error_balance":"Amount must be less than or equal to the current balance . ",
+    "primary_wallet":"Primary Wallet",
+    "premium_account":"Premium Account",
+    "wallet":"Wallet"
+    
 }

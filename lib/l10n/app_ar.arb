@@ -66,5 +66,17 @@
     "no_internet_connection":"لا يوجد اتصال بالانترنت",
     "save":"حفظ",
     "done":"تم",
-    "dark_theme":"اللون الداكن"
+    "dark_theme":"اللون الداكن",
+    "payment":"المدفوعات",
+    "vat":"ضريبة القيمة المضافة (%14)",
+    "service_tax":"ضريبة الخدمة",
+    "withholding_tax":"الخصم تحت حساب الضريبة",
+    "table_tax":"ضريبة الجدول",
+    "balance":"الرصيد",
+    "enter_amount":"ادخل المبلغ",
+    "next":"التالي",
+    "error_balance":"يجب ان يكون المبلغ اقل او يساوي الرصيد الحالي",
+    "primary_wallet":"المحفظة الأساسية",
+    "premium_account":"حساب خاص",
+    "wallet":"المحفظة"
 }

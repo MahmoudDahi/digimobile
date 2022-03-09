@@ -1,3 +1,8 @@
+import 'package:digimobile/screens/amount_payment_screen.dart';
+import 'package:digimobile/screens/complete_payment_screen.dart';
+import 'package:digimobile/screens/payment_screen.dart';
+import 'package:digimobile/screens/waiting_screen.dart';
+import 'package:digimobile/screens/wallet_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -182,6 +187,7 @@ class MyApp extends StatelessWidget {
             // or simply save your changes to "hot reload" in a Flutter IDE).
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
+
             brightness: Brightness.light,
             hoverColor: Colors.grey[200],
             textTheme: TextTheme(
@@ -205,7 +211,8 @@ class MyApp extends StatelessWidget {
               ),
             ),
             primarySwatch: Colors.deepPurple,
-
+           
+            
             fontFamily: sett.currentFont,
           ),
           home: Consumer<Entity>(
@@ -240,6 +247,11 @@ class MyApp extends StatelessWidget {
             DoucmentsValuesScreen.routeName: (ctx) => DoucmentsValuesScreen(),
             MOFRejectedScreen.routeName: (ctx) => MOFRejectedScreen(),
             NewDoucmentScreen.routeName: (ctx) => NewDoucmentScreen(),
+            PaymentScreen.routeName: (ctx) => PaymentScreen(),
+            AmountPaymentScreen.routeName: (ctx) => AmountPaymentScreen(),
+            WaitingScreen.routeName: (ctx) => WaitingScreen(),
+            CompletePaymentScreen.routeName: (ctx) => CompletePaymentScreen(),
+            WalletScreen.routeName: (ctx) => WalletScreen(),
           },
         ),
       ),

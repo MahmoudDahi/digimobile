@@ -82,6 +82,11 @@ flutter:
     - assets/images/digi.png
     - assets/images/no_data_found.png
     - assets/images/no_network_connection.png
+    - assets/images/servic-tax.png
+    - assets/images/table-tax.png
+    - assets/images/vat.png
+    - assets/images/withholding.png
+    - assets/images/confirm-payment.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

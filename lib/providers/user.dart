@@ -82,10 +82,14 @@ class User with ChangeNotifier {
       _displayName = fetchData.first['DisplayName'];
       _profileImage = fetchData.first['ProfileImage'];
       await _saveUser();
+      ;
+
       String fcmToken = await FirebaseMessaging.instance.getToken();
+      
 
       notifyListeners();
     } catch (error) {
+      print(error.toString());
       throw 'Network Error';
     } finally {
       Token = null;

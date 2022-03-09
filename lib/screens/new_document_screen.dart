@@ -29,6 +29,8 @@ class NewDoucmentScreen extends StatelessWidget {
       BuildContext context, String title, String error) {
     showDialog(
       context: context,
+      useRootNavigator: false,
+      barrierDismissible: false,
       builder: (ctx) => SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         backgroundColor:
@@ -58,7 +60,7 @@ class NewDoucmentScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
               ),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(context).popUntil((route) => route.settings.name=='/'),
               child: Text(
                 AppLocalizations.of(context).done,
                 style: TextStyle(
@@ -88,40 +90,39 @@ class NewDoucmentScreen extends StatelessWidget {
   Future<String> _showDialogLoading(
       BuildContext context, String title, int documentType) async {
     return await showDialog<String>(
-        context: context,
-        builder: (ctx) => SimpleDialog(
-              children: [
-                FutureBuilder<bool>(
-                  future: Provider.of<Document>(context, listen: false)
-                      .createNewDocument(_customerId, _dateTime,
-                          _doucmentInternalId, documentType, _serviceId, _cost),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.error != null)
-                        Navigator.of(ctx).pop(snapshot.error);
-                      else
-                        Navigator.of(ctx).pop(
-                          snapshot.data
-                              ? null
-                              : AppLocalizations.of(context).failed,
-                        );
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(width: 16),
-                          Text(AppLocalizations.of(context).loading,
-                              style: Theme.of(context).textTheme.headline1),
-                        ],
-                      ),
-                    );
-                  },
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        children: [
+          FutureBuilder<bool>(
+            future: Provider.of<Document>(context, listen: false)
+                .createNewDocument(_customerId, _dateTime, _doucmentInternalId,
+                    documentType, _serviceId, _cost),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.error != null)
+                  Navigator.of(ctx).pop(snapshot.error);
+                else
+                  Navigator.of(ctx).pop(
+                    snapshot.data ? null : AppLocalizations.of(context).failed,
+                  );
+              }
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(width: 16),
+                    Text(AppLocalizations.of(context).loading,
+                        style: Theme.of(context).textTheme.headline1),
+                  ],
                 ),
-              ],
-            ));
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   void _showDateAndTime(BuildContext context) async {

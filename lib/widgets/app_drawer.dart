@@ -1,5 +1,8 @@
 import 'package:digimobile/screens/documents_values_screen.dart';
 import 'package:digimobile/screens/mof_rejected_screen.dart';
+import 'package:digimobile/screens/payment_screen.dart';
+import 'package:digimobile/screens/waiting_screen.dart';
+import 'package:digimobile/screens/wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +59,20 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
+             _listTitleItem(
+                context,
+                AppLocalizations.of(context).payment,
+                Icons.payment,() {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(PaymentScreen.routeName);
+            }),
+             _listTitleItem(
+                context,
+                AppLocalizations.of(context).wallet,
+                Icons.account_balance_wallet,() {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(WalletScreen.routeName);
+            }),
             _listTitleItem(
                 context,
                 AppLocalizations.of(context).customers_report,
