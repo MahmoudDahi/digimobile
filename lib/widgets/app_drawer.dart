@@ -1,7 +1,8 @@
 import 'package:digimobile/screens/documents_values_screen.dart';
 import 'package:digimobile/screens/mof_rejected_screen.dart';
+import 'package:digimobile/screens/my_invoice_screen.dart';
 import 'package:digimobile/screens/payment_screen.dart';
-import 'package:digimobile/screens/waiting_screen.dart';
+import 'package:digimobile/screens/token_screen.dart';
 import 'package:digimobile/screens/wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,19 +60,37 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
-             _listTitleItem(
-                context,
-                AppLocalizations.of(context).payment,
-                Icons.payment,() {
+            _listTitleItem(
+                context, AppLocalizations.of(context).payment, Icons.payment,
+                () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(PaymentScreen.routeName);
             }),
-             _listTitleItem(
-                context,
-                AppLocalizations.of(context).wallet,
-                Icons.account_balance_wallet,() {
+            _listTitleItem(context, AppLocalizations.of(context).wallet,
+                Icons.account_balance_wallet, () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(WalletScreen.routeName);
+            }),
+            _listTitleItem(
+                context,
+                AppLocalizations.of(context).token_activation,
+                Icons.token_rounded, () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(TokenScreen.routeName);
+            }),
+            _listTitleItem(context, AppLocalizations.of(context).my_invoices,
+                Icons.note_alt_rounded, () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(MyInvoicesScreen.routeName,
+                  arguments: AppLocalizations.of(context).my_invoices);
+            }),
+            _listTitleItem(
+                context,
+                AppLocalizations.of(context).receive_invoices,
+                Icons.note_alt_rounded, () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(MyInvoicesScreen.routeName,
+                  arguments: AppLocalizations.of(context).receive_invoices);
             }),
             _listTitleItem(
                 context,

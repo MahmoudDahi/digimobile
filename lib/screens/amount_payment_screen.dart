@@ -1,4 +1,4 @@
-import 'package:digimobile/screens/waiting_screen.dart';
+import 'package:digimobile/screens/pin_code_screen.dart';
 import 'package:digimobile/widgets/digi_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -103,8 +103,8 @@ class _AmountPaymentScreenState extends State<AmountPaymentScreen> {
               DigiButton(
                 onPressed: amountBelowBalance()
                     ? () {
-                        Navigator.of(context)
-                            .pushNamed(WaitingScreen.routeName);
+                        Navigator.of(context).pushNamed(PinCodeScreen.routeName,
+                            );
                       }
                     : null,
                 child: Text(lang.next),

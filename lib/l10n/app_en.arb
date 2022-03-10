@@ -78,6 +78,17 @@
     "error_balance":"Amount must be less than or equal to the current balance . ",
     "primary_wallet":"Primary Wallet",
     "premium_account":"Premium Account",
-    "wallet":"Wallet"
+    "wallet":"Wallet",
+    "token_activation":"Token Activation",
+    "current_pin":"Enter current PIN",
+    "token_serial":"Enter token serial",
+    "token_activated":"Token Activated",
+    "activation":"Activate",
+    "my_invoices":"My Invoices",
+    "receive_invoices":"Received Invoices",
+    "sales_total":"Item Price",
+    "item_tax":"Item Tax",
+    "invoice_details":"Invoice Details"
+    
     
 }

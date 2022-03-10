@@ -1,6 +1,12 @@
+import 'package:digimobile/providers/invoice.dart';
+import 'package:digimobile/screens/activated_token_screen.dart';
 import 'package:digimobile/screens/amount_payment_screen.dart';
 import 'package:digimobile/screens/complete_payment_screen.dart';
+import 'package:digimobile/screens/invoice_details_screen.dart';
+import 'package:digimobile/screens/my_invoice_screen.dart';
 import 'package:digimobile/screens/payment_screen.dart';
+import 'package:digimobile/screens/pin_code_screen.dart';
+import 'package:digimobile/screens/token_screen.dart';
 import 'package:digimobile/screens/waiting_screen.dart';
 import 'package:digimobile/screens/wallet_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -98,6 +104,9 @@ class MyApp extends StatelessWidget {
               credit: summaryPre.credits,
               debit: summaryPre.debits,
             ),
+        ),
+         ChangeNotifierProvider<Invoices>(
+          create: (_) => Invoices(),
         ),
         ChangeNotifierProvider<Entity>(
           create: (_) => Entity(),
@@ -252,6 +261,11 @@ class MyApp extends StatelessWidget {
             WaitingScreen.routeName: (ctx) => WaitingScreen(),
             CompletePaymentScreen.routeName: (ctx) => CompletePaymentScreen(),
             WalletScreen.routeName: (ctx) => WalletScreen(),
+            TokenScreen.routeName: (ctx) => TokenScreen(),
+            ActivatedTokenScreen.routeName: (ctx) => ActivatedTokenScreen(),
+            PinCodeScreen.routeName: (ctx) => PinCodeScreen(),
+            MyInvoicesScreen.routeName: (ctx) => MyInvoicesScreen(),
+            InvoiceDetailsScreen.routeName: (ctx) => InvoiceDetailsScreen(),
           },
         ),
       ),

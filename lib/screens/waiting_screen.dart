@@ -1,4 +1,3 @@
-import 'package:digimobile/screens/complete_payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,10 +9,11 @@ class WaitingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    Future.delayed(Duration(seconds: 1)).then(
+    final routeName = ModalRoute.of(context).settings.arguments as String;
+
+    Future.delayed(Duration(seconds: 4)).then(
       (value) => Navigator.of(context).pushReplacementNamed(
-        CompletePaymentScreen.routeName,
+        routeName,
       ),
     );
 

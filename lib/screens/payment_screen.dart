@@ -28,7 +28,7 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Payments')),
+      appBar: AppBar(title: Text(lang.payment)),
       body: SingleChildScrollView(
         child: Column(
           children: [
